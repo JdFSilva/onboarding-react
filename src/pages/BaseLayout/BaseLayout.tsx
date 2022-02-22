@@ -5,19 +5,18 @@ import { APITypes } from '../../services'
 
 import './BaseLayout.css'
 
-interface ISearchResults {
-  movies: APITypes.MovieObjectResponse[]
-  shows: APITypes.ShowObjectResponse[]
-  people: APITypes.PeopleObjectResponse[]
+type BaseLayoutProps = {
+  setSearchResults: (a: {
+    movies: APITypes.MovieObjectResponse[]
+    shows: APITypes.ShowObjectResponse[]
+    people: APITypes.PeopleObjectResponse[]
+  }) => void
 }
 
-const BaseLayout: React.FC = ({ children }) => {
-  const [searchResults, setSearchResults] = React.useState<ISearchResults>({
-    movies: [],
-    shows: [],
-    people: [],
-  })
-
+const BaseLayout: React.FC<BaseLayoutProps> = ({
+  setSearchResults,
+  children,
+}) => {
   return (
     <>
       {/* HEADER */}

@@ -5,8 +5,22 @@ import { TabbedSearchList, PopularList } from '../../components'
 
 import './Home.css'
 
+interface ISearchResults {
+  movies: APITypes.MovieObjectResponse[]
+  shows: APITypes.ShowObjectResponse[]
+  people: APITypes.PeopleObjectResponse[]
+}
+
 const Home = () => {
   const [popular, setPopular] = useState<APITypes.MovieDatabaseApiResponse>()
+
+  const [searchResults, setSearchResults] = useState<ISearchResults>({
+    movies: [],
+    shows: [],
+    people: [],
+  })
+
+  console.log(searchResults)
 
   useEffect(() => {
     const getPopularMovies = async () => {
@@ -18,7 +32,7 @@ const Home = () => {
   }, [])
 
   return (
-    <BaseLayout>
+    <BaseLayout setSearchResults={setSearchResults}>
       {/* SEARCH RESULTS LIST */}
       <div className="search-list-wrapper">
         <TabbedSearchList />
