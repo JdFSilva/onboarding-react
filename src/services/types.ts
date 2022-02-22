@@ -1,6 +1,6 @@
 export interface MovieDatabaseApiResponse {
   page: number
-  results: MovieObjectResponse[]
+  results: MovieObjectResponse[] | ShowObjectResponse[] | PeopleObjectResponse[]
   totalPages: number
   totalResults: number
 }

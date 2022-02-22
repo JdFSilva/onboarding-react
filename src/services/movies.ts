@@ -1,6 +1,9 @@
 import http from './common'
+import { APITypes } from '.'
 
-const searchMovies = async (searchString: string) => {
+const searchMovies = async (
+  searchString: string
+): Promise<APITypes.MovieDatabaseApiResponse> => {
   const endpoint = `/search/movie?query=${searchString}`
   const resp = await http(endpoint, 'GET')
 

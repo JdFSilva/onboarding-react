@@ -13,8 +13,7 @@ import SearchIcon from '@mui/icons-material/Search'
 import AccountCircle from '@mui/icons-material/AccountCircle'
 import MoreIcon from '@mui/icons-material/MoreVert'
 import Button from '@mui/material/Button'
-import { moviesAPI, showsAPI, peopleAPI } from '../../services'
-import { SearchResults } from '../../contexts'
+import { moviesAPI, showsAPI, peopleAPI, APITypes } from '../../services'
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -56,7 +55,15 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }))
 
-export default function Header() {
+interface IHeaderProps {
+  setSearchResults: (a: {
+    movies: APITypes.MovieObjectResponse[]
+    shows: APITypes.ShowObjectResponse[]
+    people: APITypes.PeopleObjectResponse[]
+  }) => void
+}
+
+export default function Header({ setSearchResults }: IHeaderProps) {
   const [anchorEl, setAnchorEl] = React.useState<HTMLElement | null>(null)
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
     React.useState<HTMLElement | null>(null)
@@ -139,11 +146,20 @@ export default function Header() {
 
   const searchAll = async () => {
     // search all 3 endpoints and return them to context api
-    const movies = await moviesAPI.searchMovies(search)
+    const moviesList = await moviesAPI.searchMovies(search)
+    const movies = moviesList.results.slice(0, 5)
 
-    const shows = await showsAPI.searchShows(search)
+    const showsList = await showsAPI.searchShows(search)
+    const shows = showsList.results.slice(0, 5)
 
-    const people = await peopleAPI.searchPeople(search)
+    const peopleList = await peopleAPI.searchPeople(search)
+    const people = peopleList.results.slice(0, 5)
+
+    setSearchResults({
+      movies,
+      shows,
+      people,
+    })
   }
 
   return (
