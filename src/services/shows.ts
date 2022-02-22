@@ -1,15 +1,24 @@
-import http from "./common"
+import http from './common'
 
 const searchShows = async (searchString: string) => {
-  const endpoint = `/search/search-tv-shows?query=${searchString}`
-  const resp = await http(endpoint, "GET")
+  const endpoint = `/search/tv?query=${searchString}`
+  const resp = await http(endpoint, 'GET')
 
-  if (!resp.ok) {
-    const message = `An error has occured: ${resp.status}`
-    throw new Error(message)
-  }
-
-  return resp.data
+  return resp
 }
 
-export default searchShows
+const showDetails = async (tv_id: number) => {
+  const endpoint = `/tv/${tv_id}`
+  const resp = await http(endpoint, 'GET')
+
+  return resp
+}
+
+const showCredits = async (tv_id: number, season_number: number) => {
+  const endpoint = `/tv/${tv_id}/season${season_number}/aggregate_credits`
+  const resp = await http(endpoint, 'GET')
+
+  return resp
+}
+
+export default { searchShows, showDetails, showCredits }
