@@ -147,13 +147,19 @@ export default function Header({ setSearchResults }: IHeaderProps) {
   const searchAll = async () => {
     // search all 3 endpoints and return them to context api
     const moviesList = await moviesAPI.searchMovies(search)
-    const movies = moviesList.results.slice(0, 5)
+    const movies = moviesList.results.slice(
+      0,
+      5
+    ) as APITypes.MovieObjectResponse[]
 
     const showsList = await showsAPI.searchShows(search)
-    const shows = showsList.results.slice(0, 5)
+    const shows = showsList.results.slice(0, 5) as APITypes.ShowObjectResponse[]
 
     const peopleList = await peopleAPI.searchPeople(search)
-    const people = peopleList.results.slice(0, 5)
+    const people = peopleList.results.slice(
+      0,
+      5
+    ) as APITypes.PeopleObjectResponse[]
 
     setSearchResults({
       movies,

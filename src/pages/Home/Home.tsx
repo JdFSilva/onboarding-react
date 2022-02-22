@@ -20,8 +20,6 @@ const Home = () => {
     people: [],
   })
 
-  console.log(searchResults)
-
   useEffect(() => {
     const getPopularMovies = async () => {
       const resp = await moviesAPI.popularMovies()
@@ -35,12 +33,17 @@ const Home = () => {
     <BaseLayout setSearchResults={setSearchResults}>
       {/* SEARCH RESULTS LIST */}
       <div className="search-list-wrapper">
-        <TabbedSearchList />
+        <TabbedSearchList searchResults={searchResults} />
       </div>
 
       {/* POPULAR MOVIES LIST SIDEBAR*/}
       <div className="popular-list-wrapper">
-        <PopularList popularList={popular?.results.slice(0, 5) || []} />
+        <PopularList
+          popularList={
+            (popular?.results.slice(0, 5) as APITypes.MovieObjectResponse[]) ||
+            []
+          }
+        />
       </div>
     </BaseLayout>
   )

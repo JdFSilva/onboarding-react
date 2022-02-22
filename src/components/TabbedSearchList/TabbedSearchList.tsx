@@ -5,6 +5,8 @@ import Box from '@mui/material/Box'
 import List from '@mui/material/List'
 import ListItem from '@mui/material/ListItem'
 import ListItemText from '@mui/material/ListItemText'
+import { APITypes } from '../../services'
+import { useNavigate } from 'react-router-dom'
 
 interface TabPanelProps {
   id: string
@@ -36,31 +38,41 @@ function a11yProps(index: number) {
   }
 }
 
-export default function TabbedSearchList() {
+interface ISearchResults {
+  movies: APITypes.MovieObjectResponse[]
+  shows: APITypes.ShowObjectResponse[]
+  people: APITypes.PeopleObjectResponse[]
+}
+
+interface ITabbedSearchListProps {
+  searchResults: ISearchResults
+}
+export default function TabbedSearchList({
+  searchResults,
+}: ITabbedSearchListProps) {
+  const navigate = useNavigate()
+
   const [value, setValue] = React.useState(0)
-  const [movies, setMovies] = React.useState(['aaaaa', 'bbbbb'])
-  const [shows, setShows] = React.useState(['cccc', 'dddd'])
-  const [people, setPeople] = React.useState(['eeee', 'fffff'])
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue)
   }
 
-  const moviesItems = movies.map((item) => (
-    <ListItem key={item}>
-      <ListItemText primary={item} />
+  const moviesItems = searchResults.movies.map((item) => (
+    <ListItem key={item.title} onClick={() => navigate(`/movie/${item.id}`)}>
+      <ListItemText primary={item.title} />
     </ListItem>
   ))
 
-  const showsItems = shows.map((item) => (
-    <ListItem key={item}>
-      <ListItemText primary={item} />
+  const showsItems = searchResults.shows.map((item) => (
+    <ListItem key={item.name} onClick={() => navigate(`/show/${item.id}`)}>
+      <ListItemText primary={item.name} />
     </ListItem>
   ))
 
-  const peopleItems = people.map((item) => (
-    <ListItem key={item}>
-      <ListItemText primary={item} />
+  const peopleItems = searchResults.people.map((item) => (
+    <ListItem key={item.name} onClick={() => navigate(`/person/${item.id}`)}>
+      <ListItemText primary={item.name} />
     </ListItem>
   ))
 
@@ -80,7 +92,7 @@ export default function TabbedSearchList() {
           {moviesItems}
         </List>
       </TabPanel>
-      {/* <TabPanel id="showsSearchResults" value={value} index={1}>
+      <TabPanel id="showsSearchResults" value={value} index={1}>
         <List
           sx={{ width: '100%', maxWidth: '240px', bgcolor: 'background.paper' }}
         >
@@ -93,7 +105,7 @@ export default function TabbedSearchList() {
         >
           {peopleItems}
         </List>
-      </TabPanel> */}
+      </TabPanel>
     </Box>
   )
 }

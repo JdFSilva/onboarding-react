@@ -6,16 +6,18 @@ export interface MovieDatabaseApiResponse {
 }
 
 export interface MovieObjectResponse {
+  id: number
   title: string
   overview: string
 }
 
 export interface ShowObjectResponse {
-  title: string
+  id: number
+  name: string
   overview: string
 }
 
 export interface PeopleObjectResponse {
-  title: string
-  overview: string
+  id: number
+  name: string
 }
