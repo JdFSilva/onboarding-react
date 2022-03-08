@@ -1,0 +1,4 @@
+.carousel {
+  overflow: auto !important;
+  white-space: nowrap !important;
+}

@@ -8,6 +8,8 @@ import ListItemText from '@mui/material/ListItemText'
 import { APITypes } from '../../services'
 import { useNavigate } from 'react-router-dom'
 
+import './TabbedSearchList.css'
+
 interface TabPanelProps {
   id: string
   children?: React.ReactNode
@@ -39,9 +41,9 @@ function a11yProps(index: number) {
 }
 
 interface ISearchResults {
-  movies: APITypes.MovieObjectResponse[]
-  shows: APITypes.ShowObjectResponse[]
-  people: APITypes.PeopleObjectResponse[]
+  movies: APITypes.IMovieObjectResponse[]
+  shows: APITypes.IShowObjectResponse[]
+  people: APITypes.IPeopleObjectResponse[]
 }
 
 interface ITabbedSearchListProps {
@@ -59,19 +61,31 @@ export default function TabbedSearchList({
   }
 
   const moviesItems = searchResults.movies.map((item) => (
-    <ListItem key={item.title} onClick={() => navigate(`/movie/${item.id}`)}>
+    <ListItem
+      className="list-item"
+      key={item.id}
+      onClick={() => navigate(`/movies/${item.id}`)}
+    >
       <ListItemText primary={item.title} />
     </ListItem>
   ))
 
   const showsItems = searchResults.shows.map((item) => (
-    <ListItem key={item.name} onClick={() => navigate(`/show/${item.id}`)}>
+    <ListItem
+      className="list-item"
+      key={item.id}
+      onClick={() => navigate(`/shows/${item.id}`)}
+    >
       <ListItemText primary={item.name} />
     </ListItem>
   ))
 
   const peopleItems = searchResults.people.map((item) => (
-    <ListItem key={item.name} onClick={() => navigate(`/person/${item.id}`)}>
+    <ListItem
+      className="list-item"
+      key={item.id}
+      onClick={() => navigate(`/people/${item.id}`)}
+    >
       <ListItemText primary={item.name} />
     </ListItem>
   ))
@@ -86,23 +100,17 @@ export default function TabbedSearchList({
         </Tabs>
       </Box>
       <TabPanel id="moviesSearchResults" value={value} index={0}>
-        <List
-          sx={{ width: '100%', maxWidth: '240px', bgcolor: 'background.paper' }}
-        >
+        <List sx={{ width: '100%', bgcolor: 'background.paper' }}>
           {moviesItems}
         </List>
       </TabPanel>
       <TabPanel id="showsSearchResults" value={value} index={1}>
-        <List
-          sx={{ width: '100%', maxWidth: '240px', bgcolor: 'background.paper' }}
-        >
+        <List sx={{ width: '100%', bgcolor: 'background.paper' }}>
           {showsItems}
         </List>
       </TabPanel>
       <TabPanel id="peopleSearchResults" value={value} index={2}>
-        <List
-          sx={{ width: '100%', maxWidth: '240px', bgcolor: 'background.paper' }}
-        >
+        <List sx={{ width: '100%', bgcolor: 'background.paper' }}>
           {peopleItems}
         </List>
       </TabPanel>

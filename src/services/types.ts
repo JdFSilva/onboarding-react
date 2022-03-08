@@ -1,23 +1,26 @@
-export interface MovieDatabaseApiResponse {
+export interface IMovieDatabaseApiResponse {
   page: number
-  results: MovieObjectResponse[] | ShowObjectResponse[] | PeopleObjectResponse[]
+  results:
+    | IMovieObjectResponse[]
+    | IShowObjectResponse[]
+    | IPeopleObjectResponse[]
   totalPages: number
   totalResults: number
 }
 
-export interface MovieObjectResponse {
+export interface IMovieObjectResponse {
   id: number
   title: string
   overview: string
 }
 
-export interface ShowObjectResponse {
+export interface IShowObjectResponse {
   id: number
   name: string
   overview: string
 }
 
-export interface PeopleObjectResponse {
+export interface IPeopleObjectResponse {
   id: number
   name: string
 }

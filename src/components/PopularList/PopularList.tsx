@@ -3,24 +3,24 @@ import ListItem from '@mui/material/ListItem'
 import ListItemText from '@mui/material/ListItemText'
 import Divider from '@mui/material/Divider'
 
-import { APITypes } from '../../services'
+import { DetailsInterfaces } from '../../types'
 
 import './PopularList.css'
 
 interface PopularListProps {
-  popularList: APITypes.MovieObjectResponse[]
+  popularList: DetailsInterfaces.IMovie[]
 }
 
 export default function PopularList({ popularList }: PopularListProps) {
   const listItems = popularList.map((item) => (
-    <ListItem key={item.title}>
+    <ListItem key={item.id}>
       <ListItemText primary={item.title} />
     </ListItem>
   ))
   return (
     <List className="popular-list" sx={{ bgcolor: 'background.paper' }}>
       <ListItem>
-        <ListItemText inset primary="Popular Movies" />
+        <ListItemText primary="Popular Movies" />
       </ListItem>
       <Divider />
       {listItems}

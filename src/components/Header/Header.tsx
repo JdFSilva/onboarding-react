@@ -8,12 +8,11 @@ import Typography from '@mui/material/Typography'
 import InputBase from '@mui/material/InputBase'
 import MenuItem from '@mui/material/MenuItem'
 import Menu from '@mui/material/Menu'
-import MenuIcon from '@mui/icons-material/Menu'
 import SearchIcon from '@mui/icons-material/Search'
 import AccountCircle from '@mui/icons-material/AccountCircle'
 import MoreIcon from '@mui/icons-material/MoreVert'
 import Button from '@mui/material/Button'
-import { moviesAPI, showsAPI, peopleAPI, APITypes } from '../../services'
+import { useNavigate } from 'react-router-dom'
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -55,15 +54,25 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }))
 
-interface IHeaderProps {
-  setSearchResults: (a: {
-    movies: APITypes.MovieObjectResponse[]
-    shows: APITypes.ShowObjectResponse[]
-    people: APITypes.PeopleObjectResponse[]
-  }) => void
-}
+export default function Header() {
+  const navigate = useNavigate()
 
-export default function Header({ setSearchResults }: IHeaderProps) {
+  const [search, setSearch] = React.useState<string>('')
+
+  const goToSearch = () => {
+    navigate(`/search?q=${search}`)
+  }
+
+  const goToSearchOnEnter = (event: React.KeyboardEvent) => {
+    if (event.code === 'Enter') {
+      navigate(`/search?q=${search}`)
+    }
+  }
+
+  const goToHome = () => {
+    navigate('/')
+  }
+
   const [anchorEl, setAnchorEl] = React.useState<HTMLElement | null>(null)
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
     React.useState<HTMLElement | null>(null)
@@ -142,53 +151,26 @@ export default function Header({ setSearchResults }: IHeaderProps) {
     </Menu>
   )
 
-  const [search, setSearch] = React.useState<string>('')
-
-  const searchAll = async () => {
-    // search all 3 endpoints and return them to context api
-    const moviesList = await moviesAPI.searchMovies(search)
-    const movies = moviesList.results.slice(
-      0,
-      5
-    ) as APITypes.MovieObjectResponse[]
-
-    const showsList = await showsAPI.searchShows(search)
-    const shows = showsList.results.slice(0, 5) as APITypes.ShowObjectResponse[]
-
-    const peopleList = await peopleAPI.searchPeople(search)
-    const people = peopleList.results.slice(
-      0,
-      5
-    ) as APITypes.PeopleObjectResponse[]
-
-    setSearchResults({
-      movies,
-      shows,
-      people,
-    })
-  }
-
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
         <Toolbar>
-          <IconButton
-            size="large"
-            edge="start"
+          <Button
+            onClick={goToHome}
+            variant="text"
+            disableElevation
             color="inherit"
-            aria-label="open drawer"
-            sx={{ mr: 2 }}
           >
-            <MenuIcon />
-          </IconButton>
-          <Typography
-            variant="h6"
-            noWrap
-            component="div"
-            sx={{ display: { xs: 'none', sm: 'block' } }}
-          >
-            MUI
-          </Typography>
+            <Typography
+              variant="h6"
+              noWrap
+              component="div"
+              sx={{ display: { xs: 'none', sm: 'block' } }}
+            >
+              Home
+            </Typography>
+          </Button>
+          <Box sx={{ flexGrow: 1 }} />
           <Search>
             <SearchIconWrapper>
               <SearchIcon />
@@ -199,9 +181,15 @@ export default function Header({ setSearchResults }: IHeaderProps) {
               onChange={(event) => {
                 setSearch(event.target.value)
               }}
+              onKeyPress={goToSearchOnEnter}
             />
           </Search>
-          <Button variant="outlined" color="inherit" onClick={searchAll}>
+          <Button
+            disableElevation
+            variant="outlined"
+            color="inherit"
+            onClick={goToSearch}
+          >
             Go
           </Button>
           <Box sx={{ flexGrow: 1 }} />
