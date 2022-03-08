@@ -10,14 +10,14 @@ const searchMovies = async (
   return resp
 }
 
-const movieDetails = async (movie_id: number) => {
+const movieDetails = async (movie_id: string) => {
   const endpoint = `/movie/${movie_id}`
   const resp = await http(endpoint, 'GET')
 
   return resp
 }
 
-const movieCredits = async (movie_id: number) => {
+const movieCredits = async (movie_id: string) => {
   const endpoint = `/movie/${movie_id}/credits`
   const resp = await http(endpoint, 'GET')
 

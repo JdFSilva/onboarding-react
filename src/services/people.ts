@@ -10,21 +10,21 @@ const searchPeople = async (
   return resp
 }
 
-const personDetails = async (person_id: number) => {
+const personDetails = async (person_id: string) => {
   const endpoint = `/person/${person_id}`
   const resp = await http(endpoint, 'GET')
 
   return resp
 }
 
-const personShowsCredits = async (person_id: number) => {
+const personShowsCredits = async (person_id: string) => {
   const endpoint = `/person/${person_id}/tv_credits`
   const resp = await http(endpoint, 'GET')
 
   return resp
 }
 
-const personMoviesCredits = async (person_id: number) => {
+const personMoviesCredits = async (person_id: string) => {
   const endpoint = `/person/${person_id}/movie_credits`
   const resp = await http(endpoint, 'GET')
 

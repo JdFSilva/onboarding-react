@@ -10,14 +10,14 @@ const searchShows = async (
   return resp
 }
 
-const showDetails = async (tv_id: number) => {
+const showDetails = async (tv_id: string) => {
   const endpoint = `/tv/${tv_id}`
   const resp = await http(endpoint, 'GET')
 
   return resp
 }
 
-const showCredits = async (tv_id: number, season_number: number) => {
+const showCredits = async (tv_id: string, season_number: string) => {
   const endpoint = `/tv/${tv_id}/season${season_number}/aggregate_credits`
   const resp = await http(endpoint, 'GET')
 
