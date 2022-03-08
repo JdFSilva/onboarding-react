@@ -2,9 +2,9 @@ import { createContext } from 'react'
 import { APITypes } from '../services'
 
 interface SearchResultsProps {
-  movies: APITypes.MovieObjectResponse[]
-  shows: APITypes.ShowObjectResponse[]
-  people: APITypes.PeopleObjectResponse[]
+  movies: APITypes.IMovieObjectResponse[]
+  shows: APITypes.IShowObjectResponse[]
+  people: APITypes.IPeopleObjectResponse[]
 }
 
 const SearchResults = createContext<SearchResultsProps>({
