@@ -3,7 +3,7 @@ import { APITypes } from '.'
 
 const searchPeople = async (
   searchString: string
-): Promise<APITypes.MovieDatabaseApiResponse> => {
+): Promise<APITypes.IMovieDatabaseApiResponse> => {
   const endpoint = `/search/person?query=${searchString}`
   const resp = await http(endpoint, 'GET')
 
