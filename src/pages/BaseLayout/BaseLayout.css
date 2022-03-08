@@ -1,5 +1,5 @@
 .content-layout {
-  padding: 24px 0 0 24px;
+  padding: 24px;
   display: flex !important;
-  display: row !important;
+  flex-direction: column;
 }

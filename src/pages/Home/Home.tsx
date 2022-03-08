@@ -1,49 +1,51 @@
 import { useEffect, useState } from 'react'
 import { BaseLayout } from '..'
 import { moviesAPI, APITypes } from '../../services'
-import { TabbedSearchList, PopularList } from '../../components'
+import { MovieCard } from '../../components'
 
 import './Home.css'
 
-interface ISearchResults {
-  movies: APITypes.MovieObjectResponse[]
-  shows: APITypes.ShowObjectResponse[]
-  people: APITypes.PeopleObjectResponse[]
-}
-
 const Home = () => {
-  const [popular, setPopular] = useState<APITypes.MovieDatabaseApiResponse>()
-
-  const [searchResults, setSearchResults] = useState<ISearchResults>({
-    movies: [],
-    shows: [],
-    people: [],
-  })
+  const [popular, setPopular] = useState<APITypes.IMovieObjectResponse[]>([])
 
   useEffect(() => {
     const getPopularMovies = async () => {
       const resp = await moviesAPI.popularMovies()
-      setPopular(resp)
+      console.log('entrei')
+      console.log(resp)
+      const popularMovies = resp.results as APITypes.IMovieObjectResponse[]
+      setPopular(popularMovies)
     }
 
     getPopularMovies()
   }, [])
 
   return (
-    <BaseLayout setSearchResults={setSearchResults}>
-      {/* SEARCH RESULTS LIST */}
-      <div className="search-list-wrapper">
-        <TabbedSearchList searchResults={searchResults} />
-      </div>
-
-      {/* POPULAR MOVIES LIST SIDEBAR*/}
-      <div className="popular-list-wrapper">
-        <PopularList
-          popularList={
-            (popular?.results.slice(0, 5) as APITypes.MovieObjectResponse[]) ||
-            []
+    <BaseLayout>
+      {/* POPULAR MOVIES */}
+      <div>
+        {popular.map((movie, idx) => {
+          if ((idx + 1) % 5 === 0) {
+            return (
+              <MovieCard
+                style={{ width: 'calc(20% - 32px)', minWidth: '160px' }}
+                key={`${movie.id}`}
+                movie={movie}
+              />
+            )
           }
-        />
+          return (
+            <MovieCard
+              style={{
+                width: 'calc(20% - 32px)',
+                minWidth: '160px',
+                marginRight: '8px',
+              }}
+              key={`${movie.id}`}
+              movie={movie}
+            />
+          )
+        })}
       </div>
     </BaseLayout>
   )
